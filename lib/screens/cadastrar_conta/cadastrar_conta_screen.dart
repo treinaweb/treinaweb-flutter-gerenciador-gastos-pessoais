@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciador_gastos_pessoais/models/conta.dart';
+import 'package:gerenciador_gastos_pessoais/services/conta_service.dart';
 
 class CadastrarContaScreen extends StatelessWidget {
   final _tituloController = TextEditingController();
   final _saldoController = TextEditingController();
+  ContaService cs = ContaService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,11 @@ class CadastrarContaScreen extends StatelessWidget {
                     width: double.infinity,
                     child: RaisedButton(
                       onPressed: () {
-                        print(_saldoController.text);
+                        Conta newConta = Conta(
+                          titulo: _tituloController.text,
+                          saldo: double.parse(_saldoController.text)
+                        );
+                        cs.addConta(newConta);
                       },
                     color: Colors.blue,
                     child: Text(

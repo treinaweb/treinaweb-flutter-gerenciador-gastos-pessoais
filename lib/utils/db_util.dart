@@ -23,7 +23,12 @@ class DbUtil {
 
   static Future<void> insertData(String table, Map<String, Object> dados) async {
     final db = await DbUtil.database();
-    print(await db.insert(table, dados,
-    conflictAlgorithm: sql.ConflictAlgorithm.replace));
+    await db.insert(table, dados,
+    conflictAlgorithm: sql.ConflictAlgorithm.replace);
+  }
+
+  static Future<List<Map<String, dynamic>>> getData(String table) async {
+    final db = await DbUtil.database();
+    return db.query(table);
   }
 }

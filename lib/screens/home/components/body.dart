@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciador_gastos_pessoais/screens/home/components/card_conta.dart';
 import 'package:gerenciador_gastos_pessoais/services/conta_service.dart';
 
 class Body extends StatefulWidget {
@@ -9,6 +10,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   ContaService cs = ContaService();
   Future<List> _loadContas;
+  List _contas;
 
   @override
   void initState() {
@@ -25,7 +27,27 @@ class _BodyState extends State<Body> {
         children: [
           Container(
             height: 175,
-            
+            child: FutureBuilder(
+              future: _loadContas,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  _contas = snapshot.data;
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: _contas.length,
+                      padding: EdgeInsets.only(left: 16, right: 8),
+                      itemBuilder: (context, index) {
+                        return cardConta(context, _contas[index]);
+                      }
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
           )
         ],
       ),

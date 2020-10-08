@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciador_gastos_pessoais/screens/home/components/card_conta.dart';
 import 'package:gerenciador_gastos_pessoais/services/conta_service.dart';
+import 'package:gerenciador_gastos_pessoais/services/transacao_service.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -9,13 +10,17 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   ContaService cs = ContaService();
+  TransacaoService ts = TransacaoService();
   Future<List> _loadContas;
+  Future<List> _loadTransacoes;
   List _contas;
+  List _transacoes;
 
   @override
   void initState() {
     // TODO: implement initState
     _loadContas = _getContas();
+    _loadTransacoes = _getTransacoes();
     super.initState();
   }
   @override
@@ -48,7 +53,49 @@ class _BodyState extends State<Body> {
                 }
               },
             ),
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 24, top: 32, bottom: 16, right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Últimas transações",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,
+                  color: Colors.black),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Text(
+                    "Ver todas",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700,
+                        color: Colors.blue),
+                  ),
+                )
+              ],
+            ),
+          ),
+          FutureBuilder(
+            future: _getTransacoes(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                _transacoes = snapshot.data;
+                return Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: _transacoes.length,
+                      padding: EdgeInsets.all(10),
+                      itemBuilder: null
+                  ),
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }
+          ),
         ],
       ),
     );
@@ -56,5 +103,9 @@ class _BodyState extends State<Body> {
 
   Future<List> _getContas() async {
     return await cs.getAllContas();
+  }
+
+  Future<List> _getTransacoes() async {
+    return await ts.getAllTransacoes();
   }
 }

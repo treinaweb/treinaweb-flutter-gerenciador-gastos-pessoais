@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciador_gastos_pessoais/screens/home/components/card_conta.dart';
+import 'package:gerenciador_gastos_pessoais/screens/home/components/card_transacao.dart';
 import 'package:gerenciador_gastos_pessoais/services/conta_service.dart';
 import 'package:gerenciador_gastos_pessoais/services/transacao_service.dart';
 
@@ -86,7 +87,9 @@ class _BodyState extends State<Body> {
                       shrinkWrap: true,
                       itemCount: _transacoes.length,
                       padding: EdgeInsets.all(10),
-                      itemBuilder: null
+                      itemBuilder: (context, index) {
+                      return cardTransacao(context, index, _transacoes[index]);
+                      }
                   ),
                 );
               } else {

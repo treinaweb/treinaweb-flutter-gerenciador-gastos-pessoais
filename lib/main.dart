@@ -10,7 +10,8 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CadastrarTransacaoScreen(tipoTransacao: 1,),
+      // home: CadastrarTransacaoScreen(tipoTransacao: 1,),
+      home: HomeScreen()
     );
   }
 }

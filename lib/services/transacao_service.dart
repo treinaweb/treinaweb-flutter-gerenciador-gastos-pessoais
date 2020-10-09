@@ -15,4 +15,13 @@ class TransacaoService {
     return _transacaoList;
   }
 
+  Future<List> getTransacoesConta(int id) async {
+    String whereString = "conta = ?";
+    List<dynamic> whereArguments = [id];
+    final dataList = await DbUtil.getDataWhere('transacao',
+        whereString, whereArguments);
+    return dataList.map((transacao) => Transacao.fromMap(transacao)).toList();
+
+  }
+
 }

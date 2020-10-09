@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciador_gastos_pessoais/screens/home/components/card_conta.dart';
+import 'package:gerenciador_gastos_pessoais/screens/components/card_conta.dart';
 import 'package:gerenciador_gastos_pessoais/screens/components/card_transacao.dart';
 import 'package:gerenciador_gastos_pessoais/screens/transacao/transacao_screen.dart';
 import 'package:gerenciador_gastos_pessoais/services/conta_service.dart';
